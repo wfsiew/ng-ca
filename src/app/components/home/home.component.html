@@ -1,1 +1,43 @@
-<p>home works!</p>
+<div>
+  <div>
+    <h4>Credit: {{ data.credit | number }}</h4>
+  </div>
+  <div>
+    <label>Dropoff No.</label>
+    <input type="text" [(ngModel)]="dropoff_no">
+    <button type="button" (click)="onSubmit()">Submit</button>
+  </div>
+  <div>
+    <a href="#" (click)="logout()">Sign out</a>
+  </div>
+  <div *ngIf="confirm_payment_response">
+    <div>{{ confirm_payment_response }}</div>
+    <div *ngIf="showConfirmPayment">
+      <button type="button" (click)="onConfirmPay()">Confirm to pay</button>
+    </div>
+  </div>
+  <div *ngIf="list.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>date</th>
+          <th>type</th>
+          <th>currency</th>
+          <th>credit</th>
+          <th>value</th>
+          <th>description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let o of list">
+          <td>{{ o.date }}</td>
+          <td>{{ o.type }}</td>
+          <td>{{ o.currency }}</td>
+          <td>{{ o.credit | number }}</td>
+          <td>{{ o.value }}</td>
+          <td>{{ o.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
