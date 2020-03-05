@@ -25,7 +25,13 @@ export class TransactionService {
     return this.http.get(`${this.baseUrl}/api/transaction/list`, { params: prm });
   }
 
-  confirmPayment(num) {
-    return this.http.post(`${this.baseUrl}/api/transaction/confirm-payment`, { num: num });
+  getPaymentDetails(num) {
+    let prm: HttpParams = new HttpParams()
+      .set('num', `${num}`);
+    return this.http.get(`${this.baseUrl}/api/retail-inbound`, { params: prm });
+  }
+
+  confirmPayment(o) {
+    return this.http.post(`${this.baseUrl}/api/transaction/confirm-payment`, o);
   }
 }

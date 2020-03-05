@@ -12,9 +12,17 @@
   </div>
   <div *ngIf="confirm_payment_response">
     <div>{{ confirm_payment_response }}</div>
-    <div *ngIf="showConfirmPayment">
-      <button type="button" (click)="onConfirmPay()">Confirm to pay</button>
-    </div>
+  </div>
+  <div *ngIf="showConfirmPayment">
+    <button type="button" (click)="onConfirmPay()">Confirm to pay</button>
+  </div>
+  <div *ngIf="datax">
+    <div>Dropoff No: {{ datax.dropoff_no }}</div>
+    <div>Payment Type: {{ datax.payment_type }}</div>
+    <div>Total Amount: {{ datax.total_amount }}</div>
+    <div>Tax Amount: {{ datax.tax_amount }}</div>
+    <div>Charges Amount: {{ datax.charges_amount }}</div>
+    <div>Currency: {{ datax.amount_currency }}</div>
   </div>
   <div *ngIf="list.length > 0">
     <table>

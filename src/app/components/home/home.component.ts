@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
     credit: 0
   }
 
+  datax: any = {}
+
   sdata = {}
 
   constructor(
@@ -33,7 +35,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.socketService.setupSocketConnection();
     this.socketService.on('ca-confirm-payment').subscribe((data: any) => {
-      this.checkCreditForPayment(data);
+      console.log(data)
+      this.loadPaymentDetails(data);
     });
     this.load();
   }
@@ -47,14 +50,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  checkCreditForPayment(data) {
+  loadPaymentDetails(data) {
     this.sdata = data;
-    this.trxService.confirmPayment(data.barcode).subscribe((res: any) => {
-      this.confirm_payment_response = res.message;
+    this.trxService.getPaymentDetails(data.barcode).subscribe((res: any) => {
+      this.datax = res.data;
       this.showConfirmPayment = true;
     },
     (error) => {
       this.showConfirmPayment = false;
+      console.log(error)
       if (error.error) {
         if (error.status === 400) {
           this.confirm_payment_response = error.error.message;
@@ -74,7 +78,17 @@ export class HomeComponent implements OnInit {
   }
 
   onConfirmPay() {
-    this.socketService.send('ca-confirm-payment-success', this.sdata);
+    this.trxService.confirmPayment(this.sdata).subscribe((res: any) => {
+      this.socketService.send('ca-confirm-payment-success', this.sdata);
+      this.load();
+    },
+    (error) => {
+      if (error.error) {
+        if (error.status === 400) {
+          this.confirm_payment_response = error.error.message;
+        }
+      }
+    });
   }
 
   logout() {

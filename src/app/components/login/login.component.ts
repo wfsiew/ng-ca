@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.mform = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['testuser001', Validators.required],
+      password: ['testuser001', Validators.required]
     });
   }
 
